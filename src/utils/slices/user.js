@@ -3,14 +3,22 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "User",
   initialState: {
-    count: 0,
+    user: null,
+    jwtToken: null,
   },
   reducers: {
-    upCount: (state, action) => {
-      state.count = state.count + 1;
+    signIN: (state, action) => {
+      state.user = action.payload.user;
+      state.jwtToken = action.payload.jwtToken;
+      localStorage.setItem("user", JSON.stringify(action.payload));
+    },
+    signOut: (state, action) => {
+      localStorage.removeItem("user");
+      state.user = null;
+      state.jwtToken = null;
     },
   },
 });
 
 export default userSlice.reducer;
-export const { upCount } = userSlice.actions;
+export const { signIN, signOut } = userSlice.actions;

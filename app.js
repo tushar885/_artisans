@@ -5,11 +5,19 @@ import Home from "./src/components/Home";
 import Signup from "./src/components/user/Signup";
 import Signin from "./src/components/user/Signin";
 import Admin from "./src/components/Admin";
+import { Provider } from "react-redux";
+import store from "./src/utils/store";
+import Cart from "./src/components/Cart";
+import Map from "./src/components/Map";
 
 const route = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: (
+      <Provider store={store}>
+        <AppLayout />
+      </Provider>
+    ),
     children: [
       {
         path: "/",
@@ -20,15 +28,31 @@ const route = createBrowserRouter([
         path: "/admin",
         element: <Admin />,
       },
+      {
+        path: "/map",
+        element: <Map />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
     ],
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: (
+      <Provider store={store}>
+        <Signup />
+      </Provider>
+    ),
   },
   {
     path: "signin",
-    element: <Signin />,
+    element: (
+      <Provider store={store}>
+        <Signin />
+      </Provider>
+    ),
   },
 ]);
 

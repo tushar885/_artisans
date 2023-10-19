@@ -1,7 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { SIGN_UP_URL } from "../../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import store from "../../utils/store";
+import { signIN } from "../../utils/slices/user";
 
 const Signup = () => {
+  const userStore = useSelector((store) => store.User);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  if (userStore.user) navigate("/");
+
+  async function handleSignUp(e) {
+    e.preventDefault();
+    const reqBody = {
+      username,
+      email,
+      password,
+    };
+    console.log(reqBody);
+    const resBody = await fetch(SIGN_UP_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    });
+
+    const resData = await resBody.json();
+    if (resBody.ok) {
+      dispatch(signIN({ jwtToken: resData.token, user: resData.user }));
+      navigate("/");
+    } else {
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      setError(resData.message);
+    }
+
+    console.log(resData);
+  }
+
   return (
     <div>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -17,7 +62,7 @@ const Signup = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSignUp}>
             <div>
               <label
                 htmlFor="username"
@@ -27,6 +72,10 @@ const Signup = () => {
               </label>
               <div className="mt-2">
                 <input
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                   id="username"
                   name="username"
                   type="username"
@@ -45,6 +94,10 @@ const Signup = () => {
               </label>
               <div className="mt-2">
                 <input
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                   id="email"
                   name="email"
                   type="email"
@@ -74,6 +127,10 @@ const Signup = () => {
               </div>
               <div className="mt-2">
                 <input
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                   id="password"
                   name="password"
                   type="password"
@@ -83,6 +140,21 @@ const Signup = () => {
                 />
               </div>
             </div>
+            {error !== null ? (
+              <div className="flex justify-between">
+                <p className="text-red-700 text-xl font-semibold font-founder">
+                  {error}
+                </p>
+                <p
+                  className="text-red-700 text-xl font-bold font-founder"
+                  onClick={() => {
+                    setError(null);
+                  }}
+                >
+                  ❌
+                </p>
+              </div>
+            ) : null}
 
             <div>
               <button

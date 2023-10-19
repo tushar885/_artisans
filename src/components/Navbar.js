@@ -1,12 +1,16 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import store from "../utils/store";
+import { signOut } from "../utils/slices/user";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "Home", href: "/", current: true },
+  { name: "Admin", href: "/admin", current: false },
+  { name: "Map", href: "/map", current: false },
+  { name: "Cart", href: "/cart", current: false },
 ];
 
 function classNames(...classes) {
@@ -14,6 +18,9 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const userStore = useSelector((store) => store.User);
+  const dispatch = useDispatch();
+
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-4">
       {({ open }) => (
@@ -43,9 +50,9 @@ export default function Navbar() {
                 <div className="hidden  sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
@@ -55,20 +62,23 @@ export default function Navbar() {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button> */}
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-4">
+                {userStore.user ? (
+                  <button
+                    type="button"
+                    className="relative border border-white rounded-lg px-4 bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    onClick={() => {
+                      dispatch(signOut());
+                    }}
+                  >
+                    Sign Out
+                  </button>
+                ) : null}
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -142,10 +152,10 @@ export default function Navbar() {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item) => (
-                <Disclosure.Button
+                <Link
                   key={item.name}
-                  as="a"
-                  href={item.href}
+                  // as="a"
+                  to={item.href}
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
@@ -155,7 +165,7 @@ export default function Navbar() {
                   aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
-                </Disclosure.Button>
+                </Link>
               ))}
             </div>
           </Disclosure.Panel>

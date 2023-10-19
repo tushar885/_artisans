@@ -1,13 +1,27 @@
-import React, { useState } from "react";
-import { Provider } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import store from "../utils/store";
 import Navbar from "./Navbar";
+import { signIN } from "../utils/slices/user";
 
 const AppLayout = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const userData = useSelector((store) => store.User);
+  const dispatch = useDispatch();
+  let checked = false;
 
-  if (!isLoggedIn) {
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      dispatch(signIN({ jwtToken: user.jwtToken, user: user.user }));
+      checked = true;
+    }
+  }, []);
+
+  // if (!checked) return;
+
+  if (userData.user === null) {
     return (
       <div className=" flex flex-col gap-16 w-screen min-h-screen justify-center items-center px-8">
         <div className="flex flex-col gap-8">
@@ -42,12 +56,12 @@ const AppLayout = () => {
   }
 
   return (
-    <Provider store={store}>
+    <div>
       <Navbar />
       <div className="px-8">
         <Outlet />
       </div>
-    </Provider>
+    </div>
   );
 };
 
