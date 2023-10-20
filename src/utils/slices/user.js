@@ -17,8 +17,12 @@ const userSlice = createSlice({
       state.user = null;
       state.jwtToken = null;
     },
+    updateKhojoProfile: (state, action) => {
+      state.user.khojoUserProfiles = action.payload;
+      localStorage.setItem("user", JSON.stringify(state));
+    },
   },
 });
 
 export default userSlice.reducer;
-export const { signIN, signOut } = userSlice.actions;
+export const { signIN, signOut, updateKhojoProfile } = userSlice.actions;

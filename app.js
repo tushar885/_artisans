@@ -9,6 +9,8 @@ import { Provider } from "react-redux";
 import store from "./src/utils/store";
 import Cart from "./src/components/Cart";
 import Map from "./src/components/Map";
+import KhojoProfileForm from "./src/components/KhojoProfileForm";
+import ShowProfiles from "./src/components/ShowProfiles";
 
 const route = createBrowserRouter([
   {
@@ -36,6 +38,14 @@ const route = createBrowserRouter([
         path: "/cart",
         element: <Cart />,
       },
+      {
+        path: "/form",
+        element: <KhojoProfileForm />,
+      },
+      {
+        path: "/profiles",
+        element: <ShowProfiles />,
+      },
     ],
   },
   {
@@ -47,7 +57,7 @@ const route = createBrowserRouter([
     ),
   },
   {
-    path: "signin",
+    path: "/signin",
     element: (
       <Provider store={store}>
         <Signin />

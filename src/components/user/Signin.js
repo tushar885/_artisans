@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGN_IN_URL } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,9 @@ const Signin = () => {
   const navigate = useNavigate();
   const userStore = useSelector((store) => store.User);
 
-  if (userStore.user) navigate("/");
+  useEffect(() => {
+    if (userStore.user) navigate("/");
+  }, []);
 
   // console.log(userStore);
 
@@ -34,7 +36,9 @@ const Signin = () => {
 
     const resData = await resBody.json();
     if (resBody.ok) {
-      dispatch(signIN({ jwtToken: resData.token, user: resData.user }));
+      dispatch(
+        signIN({ jwtToken: resData.token, user: resData.userWithProfiles })
+      );
       navigate("/");
     } else {
       setEmail("");

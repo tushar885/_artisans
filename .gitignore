@@ -1,3 +1,5 @@
 .parcel-cache
 dist
 node_modules
+template_1.html
+template_2.html

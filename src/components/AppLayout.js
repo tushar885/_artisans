@@ -4,22 +4,24 @@ import { Link, Outlet } from "react-router-dom";
 import store from "../utils/store";
 import Navbar from "./Navbar";
 import { signIN } from "../utils/slices/user";
+import ThemeSelected from "../utils/ThemeSelected";
 
 const AppLayout = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(true);
   const userData = useSelector((store) => store.User);
   const dispatch = useDispatch();
-  let checked = false;
+  const [checked, setChecked] = useState(false);
+  const [theme, setTheme] = useState(null);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       dispatch(signIN({ jwtToken: user.jwtToken, user: user.user }));
-      checked = true;
     }
+    setChecked(true);
   }, []);
 
-  // if (!checked) return;
+  if (!checked) return <div></div>;
 
   if (userData.user === null) {
     return (
@@ -56,12 +58,14 @@ const AppLayout = () => {
   }
 
   return (
-    <div>
-      <Navbar />
-      <div className="px-8">
-        <Outlet />
+    <ThemeSelected.Provider value={{ theme, setTheme }}>
+      <div>
+        <Navbar />
+        <div className="px-8">
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </ThemeSelected.Provider>
   );
 };
 

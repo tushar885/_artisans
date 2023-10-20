@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGN_UP_URL } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,9 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  if (userStore.user) navigate("/");
+  useEffect(() => {
+    if (userStore.user) navigate("/");
+  }, []);
 
   async function handleSignUp(e) {
     e.preventDefault();
@@ -34,8 +36,12 @@ const Signup = () => {
     });
 
     const resData = await resBody.json();
+    console.log(resBody);
+    console.log(resData);
     if (resBody.ok) {
-      dispatch(signIN({ jwtToken: resData.token, user: resData.user }));
+      dispatch(
+        signIN({ jwtToken: resData.token, user: resData.userWithProfiles })
+      );
       navigate("/");
     } else {
       setEmail("");
@@ -116,14 +122,6 @@ const Signup = () => {
                 >
                   Password
                 </label>
-                {/* <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div> */}
               </div>
               <div className="mt-2">
                 <input
