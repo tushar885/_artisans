@@ -1,6 +1,6 @@
 // For production
-export const SIGN_IN_URL = "https://artisan-api-q9uw.onrender.com/signin";
-export const SIGN_UP_URL = "https://artisan-api-q9uw.onrender.com/signup";
+export const SIGN_IN_URL = "https://artisan-api-q9uw.onrender.com/auth/signin";
+export const SIGN_UP_URL = "https://artisan-api-q9uw.onrender.com/auth/signup";
 export const CREATE_USER =
   "https://artisan-api-q9uw.onrender.com/create-userProfile";
 
