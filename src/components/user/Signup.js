@@ -144,7 +144,7 @@ const Signup = () => {
                   {error}
                 </p>
                 <p
-                  className="text-red-700 text-xl font-bold font-founder"
+                  className="text-red-700 text-xl font-bold font-founder hover:cursor-pointer"
                   onClick={() => {
                     setError(null);
                   }}

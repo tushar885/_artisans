@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Formik, ErrorMessage } from "formik";
 import { CREATE_USER, DISTRICTS } from "../utils/constants";
@@ -18,6 +18,11 @@ const KhojoProfileForm = () => {
   const dispatch = useDispatch();
 
   const { theme, setTheme } = useContext(ThemeSelected);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (theme === null) navigate("/");
+  }, []);
 
   return (
     <Formik
@@ -76,6 +81,7 @@ const KhojoProfileForm = () => {
           console.log(response);
           setSubmitting(false);
           resetForm();
+          setImage(null);
 
           if (response.status === 201) {
             dispatch(
@@ -84,10 +90,13 @@ const KhojoProfileForm = () => {
               )
             );
 
-            navigate("/");
+            navigate("/profiles");
           }
         } catch (error) {
           console.error(error);
+          resetForm();
+          setImage(null);
+          setError(error.message);
         }
 
         // const resBody = await fetch(CREATE_USER, {
@@ -106,7 +115,11 @@ const KhojoProfileForm = () => {
     >
       {(formik) => {
         return (
-          <div className="flex justify-center">
+          <div
+            className={`flex justify-center ${
+              formik.isSubmitting ? "opacity-50" : ""
+            }`}
+          >
             <form
               className="max-w-5xl"
               onSubmit={formik.handleSubmit}
@@ -117,6 +130,21 @@ const KhojoProfileForm = () => {
               // enctype="multipart/form-data"
               encType="multipart/form-data"
             >
+              {error !== null ? (
+                <div className="flex justify-between my-4  border  border-red-700 rounded-md py-4 px-4">
+                  <p className="text-red-700 text-xl font-semibold font-founder">
+                    {error}
+                  </p>
+                  <p
+                    className="text-red-700 text-xl font-bold font-founder hover:cursor-pointer"
+                    onClick={() => {
+                      setError(null);
+                    }}
+                  >
+                    ❌
+                  </p>
+                </div>
+              ) : null}
               <div className="space-y-12">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">

@@ -1,7 +1,13 @@
+// For production
 export const SIGN_IN_URL = "https://artisan-api-q9uw.onrender.com/signin";
 export const SIGN_UP_URL = "https://artisan-api-q9uw.onrender.com/signup";
 export const CREATE_USER =
   "https://artisan-api-q9uw.onrender.com/create-userProfile";
+
+// For local Development
+// export const SIGN_IN_URL = "http://localhost:3000/signin";
+// export const SIGN_UP_URL = "http://localhost:3000/signup";
+// export const CREATE_USER = "http://localhost:3000/create-userProfile";
 
 export const DISTRICTS = [
   "Ajmer",
