@@ -27,8 +27,8 @@ const KhojoProfilesFrame = ({ user }) => {
             .replaceAll("{{pfp}}", profile1.pfp)
             .replaceAll("{{instagram}}", profile1.socialLinks.instagram)
             .replaceAll("{{twitter}}", profile1.socialLinks.twitter)
-            .replaceAll("{{facebook}}", profile1.socialLinks.facebook)
-            .replace(/"/g, "");
+            .replaceAll("{{facebook}}", profile1.socialLinks.facebook);
+          // .replace(/"/g, "");
         } else if (user.theme_id === "2") {
           cleanedHtmlString = TEMPLATE_2.replaceAll("{{name}}", profile1.name)
             .replaceAll("{{businessAddress}}", profile1.businessAddress)
@@ -37,8 +37,8 @@ const KhojoProfilesFrame = ({ user }) => {
             .replaceAll("{{pfp}}", profile1.pfp)
             .replaceAll("{{instagram}}", profile1.socialLinks.instagram)
             .replaceAll("{{twitter}}", profile1.socialLinks.twitter)
-            .replaceAll("{{facebook}}", profile1.socialLinks.facebook)
-            .replace(/"/g, "");
+            .replaceAll("{{facebook}}", profile1.socialLinks.facebook);
+          // .replace(/"/g, "");
         }
 
         // console.log(cleanedHtmlString);

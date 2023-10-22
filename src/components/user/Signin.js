@@ -12,6 +12,7 @@ const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userStore = useSelector((store) => store.User);
+  const [isSubmitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (userStore.user) navigate("/");
@@ -21,6 +22,7 @@ const Signin = () => {
 
   async function handleSignIn(e) {
     e.preventDefault();
+    setSubmitting(true);
     const reqBody = {
       email,
       password,
@@ -43,13 +45,14 @@ const Signin = () => {
     } else {
       setEmail("");
       setPassword("");
+      setSubmitting(false);
       setError(resData.message);
     }
     console.log(resData);
   }
 
   return (
-    <div>
+    <div className={`${isSubmitting ? "opacity-50" : ""}`}>
       {" "}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -136,6 +139,7 @@ const Signin = () => {
             <div>
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in

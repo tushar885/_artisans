@@ -4,9 +4,9 @@ export const SIGN_UP_URL = "https://artisan-api-q9uw.onrender.com/auth/signup";
 export const CREATE_USER =
   "https://artisan-api-q9uw.onrender.com/create-userProfile";
 
-// For local Development
-// export const SIGN_IN_URL = "http://localhost:3000/signin";
-// export const SIGN_UP_URL = "http://localhost:3000/signup";
+// // For local Development
+// export const SIGN_IN_URL = "http://localhost:3000/auth/signin";
+// export const SIGN_UP_URL = "http://localhost:3000/auth/signup";
 // export const CREATE_USER = "http://localhost:3000/create-userProfile";
 
 export const DISTRICTS = [
@@ -101,7 +101,7 @@ export const TEMPLATE_1 = `<!DOCTYPE html>
 
       .bAddWrapper {
         display: flex;
-        gap: 4rem;
+        gap: 2rem;
         justify-content: center;
         align-items: center;
         border: 2px solid #c6b0b0;
@@ -112,7 +112,6 @@ export const TEMPLATE_1 = `<!DOCTYPE html>
 
       .bAddWrapper svg {
         transform: scale(1.5);
-        display: none;
       }
 
       .bDetailWrapper {
@@ -145,7 +144,6 @@ export const TEMPLATE_1 = `<!DOCTYPE html>
 
       .socials_wrapper svg {
         transform: scale(1.5);
-        display: none;
       }
 
       .socials_wrapper a {
@@ -295,7 +293,7 @@ export const TEMPLATE_2 = `<!DOCTYPE html>
 
       .bAddWrapper {
         display: flex;
-        gap: 4rem;
+        gap: 2rem;
         justify-content: center;
         align-items: center;
         border: 2px solid #a7aa7c;
@@ -305,7 +303,6 @@ export const TEMPLATE_2 = `<!DOCTYPE html>
 
       .bAddWrapper svg {
         transform: scale(1.5);
-        display: none;
       }
 
       .bDetailWrapper {
@@ -338,7 +335,6 @@ export const TEMPLATE_2 = `<!DOCTYPE html>
 
       .socials_wrapper svg {
         transform: scale(1.5);
-        display: none;
       }
 
       .socials_wrapper a {
