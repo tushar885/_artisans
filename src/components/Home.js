@@ -1,18 +1,49 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { upCount } from "../utils/slices/user";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useContext } from "react";
 import ThemeSelected from "../utils/ThemeSelected";
 import { Link } from "react-router-dom";
+import store from "../utils/store";
+import { GET_ALL_TEMPLATES } from "../utils/constants";
+import { populate_allTemplates } from "../utils/slices/admin";
 
 const Home = () => {
   const userStore = useSelector((store) => store.User);
-
+  console.log(userStore);
+  const { allTemplates } = useSelector((store) => store.Admin);
+  const dispatch = useDispatch();
   const { theme, setTheme } = useContext(ThemeSelected);
-  console.log(theme);
 
   console.log(userStore);
+
+  async function get_allTemplates() {
+    const resBody = await fetch(GET_ALL_TEMPLATES, {
+      method: "GET",
+      headers: {
+        authorization: `bearer ${userStore.jwtToken}`,
+      },
+    });
+
+    const resData = await resBody.json();
+    console.log(resBody);
+    console.log(resData);
+    if (resBody.ok) {
+      return resData;
+    } else {
+      return new Error("Error");
+    }
+  }
+
+  useEffect(() => {
+    get_allTemplates()
+      .then((data) => {
+        dispatch(populate_allTemplates(data));
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <div className="flex flex-col justify-center items-center gap-16">
       <div className="max-w-6xl flex flex-col justify-center items-center text-left gap-4 w-fit">
@@ -27,10 +58,26 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="w-full max-w-xl flex flex-col gap-6">
+      <div className="w-full max-w-xl flex flex-col gap-6 ">
         <p className="text-xl text-gray-900 font-bold">Create Profile : </p>
-        <div className="flex w-full gap-4 flex-col sm:flex-row">
-          <Link to={"/form"} className="w-full">
+        <div className="flex w-full gap-4 flex-col sm:flex-row flex-wrap justify-center">
+          {allTemplates.map((temp) => {
+            console.log(temp);
+            return (
+              <Link to={"/form"} className="" key={temp._id}>
+                <button
+                  className="flex w-fit justify-center rounded-md bg-indigo-600 px-4 py-8 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={() => {
+                    setTheme(temp.theme_id);
+                  }}
+                >
+                  Template : {temp.theme_id}
+                </button>
+              </Link>
+            );
+          })}
+
+          {/* <Link to={"/form"} className="w-full">
             <button
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-8 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               onClick={() => {
@@ -49,7 +96,7 @@ const Home = () => {
             >
               Template : 2
             </button>
-          </Link>
+          </Link> */}
         </div>
 
         <div>

@@ -164,30 +164,9 @@ const KhojoProfileForm = () => {
                           Profile Photo
                         </label>
                         <input
-                          // type="file"
-                          // id="pfp"
-                          // name="pfp"
-                          // accept="image/*"
                           style={{
                             display: "none",
                           }}
-                          // onChange={(e) => {
-                          //   formik.setFieldValue(
-                          //     "pfp",
-                          //     e.currentTarget.files[0]
-                          //   );
-
-                          //   // const formData = new FormData();
-                          //   // formData.append('file', e.currentTarget.files[0]);
-
-                          //   // formik.setFieldValue("pfp", reader.result);
-                          //   const reader = new FileReader();
-                          //   reader.readAsDataURL(e.currentTarget.files[0]);
-                          //   reader.onload = (evt) => {
-                          //     setImage(reader.result);
-                          //   };
-                          // }}
-
                           type="file"
                           id="pfp"
                           name="pfp"
