@@ -22,9 +22,9 @@ export default function Navbar() {
     { name: "Admin", href: "/admin", current: false },
   ];
 
-  if (!userStore.user.isAdmin) {
-    navigation.pop();
-  }
+  // if (!userStore.user.isAdmin) {
+  //   navigation.pop();
+  // }
 
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-4">
