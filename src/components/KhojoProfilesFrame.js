@@ -22,24 +22,8 @@ const KhojoProfilesFrame = ({ user }) => {
   } = user;
 
   const profile1 = user;
-  console.log(user);
 
   const iframeRef = useRef(null);
-
-  // async function getTemplate() {
-  //   const resBody = await fetch(template.cloudinaryLink, {
-  //     method: "GET",
-  //     headers: {
-  //       authorization: `bearer ${jwtToken}`,
-  //     },
-  //     mode: 'cors',
-  //   });
-  //   const resData = await resBody.json();
-  //   console.log(resBody);
-  //   console.log(resData);
-
-  //   // const resBody = axios.get()
-  // }
 
   useEffect(() => {
     async function getTemplate() {
@@ -51,15 +35,12 @@ const KhojoProfilesFrame = ({ user }) => {
       const resBody = await axios.get(
         `${BASE_URL}cloudinary` + cloudinaryLink,
         {
-          // method: "GET",
           headers: {
             authorization: `bearer ${jwtToken}`,
           },
           mode: "cors",
         }
       );
-      // const resData = await resBody.json();
-      // console.log(resBody);
       if (resBody.status === 200) {
         setOriginalHTML(resBody.data);
       } else new Error("NOT Found");
@@ -74,7 +55,6 @@ const KhojoProfilesFrame = ({ user }) => {
       const iframe = iframeRef.current;
       let cleanedHtmlString;
       if (iframe) {
-        // if (user.theme_id === "template_1") {
         cleanedHtmlString = originalHTML
           .replaceAll("{{name}}", profile1.name)
           .replaceAll("{{businessAddress}}", profile1.businessAddress)
@@ -84,20 +64,6 @@ const KhojoProfilesFrame = ({ user }) => {
           .replaceAll("{{instagram}}", profile1.socialLinks.instagram)
           .replaceAll("{{twitter}}", profile1.socialLinks.twitter)
           .replaceAll("{{facebook}}", profile1.socialLinks.facebook);
-        // .replace(/"/g, "");
-        // } else if (user.theme_id === "template_2") {
-        //   cleanedHtmlString = TEMPLATE_2.replaceAll("{{name}}", profile1.name)
-        //     .replaceAll("{{businessAddress}}", profile1.businessAddress)
-        //     .replaceAll("{{businessDetails}}", profile1.businessDetails)
-        //     .replaceAll("{{businessName}}", profile1.businessName)
-        //     .replaceAll("{{pfp}}", profile1.pfp)
-        //     .replaceAll("{{instagram}}", profile1.socialLinks.instagram)
-        //     .replaceAll("{{twitter}}", profile1.socialLinks.twitter)
-        //     .replaceAll("{{facebook}}", profile1.socialLinks.facebook);
-        //   // .replace(/"/g, "");
-        // }
-
-        // console.log(cleanedHtmlString);
 
         iframe.contentDocument.open();
         iframe.contentDocument.write(cleanedHtmlString);
@@ -105,13 +71,10 @@ const KhojoProfilesFrame = ({ user }) => {
       }
     };
 
-    // Call the function to remove double quotes when the component mounts
     updateIframeContent();
   }, [originalHTML]);
 
   if (!user.theme_id) return;
-
-  // if (originalHTML === null) return;
 
   if (originalHTML === null) return <div></div>;
   return (

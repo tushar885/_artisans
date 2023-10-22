@@ -9,7 +9,6 @@ import axios from "axios";
 import { UPLOAD_TEMPLATE } from "../utils/constants";
 
 const Admin = () => {
-  // const [isAdmin, setIsAdmin] = useState(false);
   const { user, jwtToken } = useSelector((store) => store.User);
   const { allUsers } = useSelector((store) => store.Admin);
   const [isSubmitting, setSubmitting] = useState(false);
@@ -18,16 +17,12 @@ const Admin = () => {
   const [themeId, setThemeId] = useState("");
 
   const [selectedFile, setFile] = useState(null);
+  const [previewIm, setPreview] = useState(null);
 
   // const {user} = userStore;
   const [time, setTime] = useState(5000);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFile(file);
-  };
 
   async function submitHandler(e) {
     e.preventDefault();
@@ -35,6 +30,7 @@ const Admin = () => {
     const reqBody = new FormData();
     reqBody.append("template", selectedFile);
     reqBody.append("theme_id", themeId);
+    reqBody.append("preview_image", previewIm);
 
     try {
       const response = await axios.post(UPLOAD_TEMPLATE, reqBody, {
@@ -43,24 +39,18 @@ const Admin = () => {
           authorization: `bearer ${jwtToken}`,
         },
       });
-      console.log(response);
-      // resetForm();
-      // setImage(null);
       setSubmitting(false);
 
+      setThemeId("");
+      setPreview(null);
+      setFile(null);
+
       if (response.status === 200) {
-        // dispatch(
-        //   updateKhojoProfile(
-        //     response.data.userWithProfiles.khojoUserProfiles
-        //   )
-        // );
-        // navigate("/profiles");
         setMessage("Template Successfully Uploaded.");
       } else {
         setMessage("Not Uploaded");
       }
     } catch (error) {
-      console.error(error);
       setError(error.message);
     }
   }
@@ -187,37 +177,73 @@ const Admin = () => {
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1">
             <div className="flex gap-4 justify-between items-center min-h-fit  ">
               <div>
-                <div className="border-2 px-8 py-6 rounded-lg mb-4">
-                  <label
-                    htmlFor="template"
-                    className="block text-lg font-medium leading-6 text-gray-900 self-start mb-4"
-                  >
-                    Upload Themes :
-                  </label>
-                  <input
-                    style={{
-                      display: "none",
-                    }}
-                    type="file"
-                    id="template"
-                    name="template"
-                    accept=".html"
-                    onChange={handleFileChange}
-                  />
-                  <label
-                    htmlFor="template"
-                    className="rounded-md bg-indigo-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Select File (.html file)
-                  </label>
-                  <div className="mt-2">
+                <div className="border-2 px-8 py-6 rounded-lg mb-4  gap-6 flex flex-col">
+                  <div className="flex gap-4 items-center ">
+                    <label
+                      htmlFor="template"
+                      className="block text-lg font-medium text-gray-900 "
+                    >
+                      Upload Themes :
+                    </label>
+                    <input
+                      style={{
+                        display: "none",
+                      }}
+                      type="file"
+                      id="template"
+                      name="template"
+                      accept=".html"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        setFile(file);
+                      }}
+                    />
+                    <label
+                      htmlFor="template"
+                      className="rounded-md bg-indigo-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Select File (.html file)
+                    </label>
+
+                    {selectedFile ? <p>✔</p> : null}
+                  </div>
+
+                  <div className="flex gap-4 items-center ">
+                    <label
+                      htmlFor="preview_image"
+                      className="block text-lg font-medium leading-6 text-gray-900"
+                    >
+                      Preview Image :
+                    </label>
+                    <input
+                      style={{
+                        display: "none",
+                      }}
+                      type="file"
+                      id="preview_image"
+                      name="preview_image"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        setPreview(file);
+                      }}
+                    />
+                    <label
+                      htmlFor="preview_image"
+                      className="rounded-md bg-indigo-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Select File
+                    </label>
+                    {previewIm ? <p>✔</p> : null}
+                  </div>
+                  <div className="flex gap-4  items-center">
                     <label
                       htmlFor="theme_id"
                       className="block text-lg font-semibold leading-6 text-gray-900"
                     >
                       Theme Id :
                     </label>
-                    <div className="mt-2">
+                    <div className="mt-2 grow">
                       <input
                         value={themeId}
                         onChange={(e) => {

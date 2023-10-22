@@ -11,7 +11,7 @@ export const GET_ALL_TEMPLATES =
   "https://artisan-api-q9uw.onrender.com/getAllTemplates";
 export const BASE_URL = "https://artisan-api-q9uw.onrender.com/";
 
-// For local Development
+// // For local Development
 // export const SIGN_IN_URL = "http://localhost:3000/auth/signin";
 // export const SIGN_UP_URL = "http://localhost:3000/auth/signup";
 // export const CREATE_USER = "http://localhost:3000/create-userProfile";

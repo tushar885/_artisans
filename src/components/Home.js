@@ -9,12 +9,9 @@ import { populate_allTemplates } from "../utils/slices/admin";
 
 const Home = () => {
   const userStore = useSelector((store) => store.User);
-  console.log(userStore);
   const { allTemplates } = useSelector((store) => store.Admin);
   const dispatch = useDispatch();
   const { theme, setTheme } = useContext(ThemeSelected);
-
-  console.log(userStore);
 
   async function get_allTemplates() {
     const resBody = await fetch(GET_ALL_TEMPLATES, {
@@ -60,43 +57,24 @@ const Home = () => {
 
       <div className="w-full max-w-xl flex flex-col gap-6 ">
         <p className="text-xl text-gray-900 font-bold">Create Profile : </p>
-        <div className="flex w-full gap-4 flex-col sm:flex-row flex-wrap justify-center">
+        <div className="flex w-full gap-4 flex-col sm:flex-row flex-wrap ">
           {allTemplates.map((temp) => {
             console.log(temp);
             return (
-              <Link to={"/form"} className="" key={temp._id}>
-                <button
-                  className="flex w-fit justify-center rounded-md bg-indigo-600 px-4 py-8 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  onClick={() => {
-                    setTheme(temp.theme_id);
-                  }}
-                >
-                  Template : {temp.theme_id}
-                </button>
+              <Link to={"/form"} key={temp._id}>
+                <div className="border-2 p-1 border-indigo-600 rounded-lg">
+                  <img
+                    src={temp.previewImageUrl}
+                    alt={temp.theme_id}
+                    className="w-24 h-auto rounded-lg"
+                    onClick={() => {
+                      setTheme(temp.theme_id);
+                    }}
+                  />
+                </div>
               </Link>
             );
           })}
-
-          {/* <Link to={"/form"} className="w-full">
-            <button
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-8 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => {
-                setTheme(1);
-              }}
-            >
-              Template : 1
-            </button>
-          </Link>
-          <Link to="/form" className="w-full">
-            <button
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-8 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => {
-                setTheme(2);
-              }}
-            >
-              Template : 2
-            </button>
-          </Link> */}
         </div>
 
         <div>

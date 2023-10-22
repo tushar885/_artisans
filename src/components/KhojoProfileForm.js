@@ -38,10 +38,6 @@ const KhojoProfileForm = () => {
         facebook: "",
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
-        console.log(values);
-
-        // const boundary = "YOUR_UNIQUE_BOUNDARY_STRING";
-
         const reqBody = new FormData();
         reqBody.append("pfp", values.pfp);
         reqBody.append("name", values.name);
@@ -54,23 +50,6 @@ const KhojoProfileForm = () => {
         reqBody.append("facebook", values.facebook);
         reqBody.append("theme_id", theme);
 
-        // console.log(imagePfp);
-
-        // const reqBody = {
-        //   name: values.name,
-        //   pfp: imagePfp,
-        //   businessName: values.businessName,
-        //   businessAddress: values.businessAddress,
-        //   businessDetails: values.businessDetails,
-        //   district: values.district,
-        //   socialLinks: {
-        //     instagram: values.instagram,
-        //     twitter: values.twitter,
-        //     facebook: values.facebook,
-        //   },
-        // };
-
-        console.log(reqBody);
         try {
           const response = await axios.post(CREATE_USER, reqBody, {
             headers: {
@@ -78,7 +57,6 @@ const KhojoProfileForm = () => {
               authorization: `bearer ${userStore.jwtToken}`,
             },
           });
-          console.log(response);
           setSubmitting(false);
           resetForm();
           setImage(null);
@@ -93,24 +71,10 @@ const KhojoProfileForm = () => {
             navigate("/profiles");
           }
         } catch (error) {
-          console.error(error);
           resetForm();
           setImage(null);
           setError(error.message);
         }
-
-        // const resBody = await fetch(CREATE_USER, {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": `multipart/form-data; boundary=${boundary}`,
-        //     authorization: `bearer ${userStore.jwtToken}`,
-        //   },
-        //   body: reqBody,
-        // });
-
-        // const resData = await resBody.json();
-        // console.log(resBody);
-        // console.log(resData);
       }}
     >
       {(formik) => {
@@ -123,11 +87,6 @@ const KhojoProfileForm = () => {
             <form
               className="max-w-5xl"
               onSubmit={formik.handleSubmit}
-              // action={}
-              // enctype="multipart/form-data"
-              // action={CREATE_USER}
-              // method="POST"
-              // enctype="multipart/form-data"
               encType="multipart/form-data"
             >
               {error !== null ? (

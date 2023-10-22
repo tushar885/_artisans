@@ -7,7 +7,6 @@ import { signIN } from "../utils/slices/user";
 import ThemeSelected from "../utils/ThemeSelected";
 
 const AppLayout = () => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(true);
   const userData = useSelector((store) => store.User);
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
