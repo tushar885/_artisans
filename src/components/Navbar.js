@@ -6,14 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import store from "../utils/store";
 import { signOut } from "../utils/slices/user";
 
-const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Admin", href: "/admin", current: false },
-  { name: "Map", href: "/map", current: false },
-  // { name: "Form", href: "/form", current: false },
-  { name: "Profiles", href: "/profiles", current: false },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -21,6 +13,18 @@ function classNames(...classes) {
 export default function Navbar() {
   const userStore = useSelector((store) => store.User);
   const dispatch = useDispatch();
+
+  const navigation = [
+    { name: "Home", href: "/", current: true },
+    { name: "Map", href: "/map", current: false },
+    // { name: "Form", href: "/form", current: false },
+    { name: "Profiles", href: "/profiles", current: false },
+    { name: "Admin", href: "/admin", current: false },
+  ];
+
+  if (!userStore.user.isAdmin) {
+    navigation.pop();
+  }
 
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-4">
