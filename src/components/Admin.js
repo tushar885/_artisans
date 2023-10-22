@@ -83,6 +83,7 @@ const Admin = () => {
 
   async function fetchAllUsersRequest() {
     try {
+      if (!user.isAdmin) return;
       const resBody = await fetch(GET_ALL_USERS, {
         method: "GET",
         headers: {
