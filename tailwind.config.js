@@ -9,6 +9,9 @@ module.exports = {
         founder: ["Space Grotesk", "sans-serif"],
         fira: ["Fira Code", "monospace"],
       },
+      backgroundImage: {
+        // loader_gif: "url('./assests/LOADER_GIF.gif')",
+      },
     },
   },
   plugins: [

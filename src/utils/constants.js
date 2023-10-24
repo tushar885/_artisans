@@ -10,8 +10,10 @@ export const UPLOAD_TEMPLATE =
 export const GET_ALL_TEMPLATES =
   "https://artisan-api-q9uw.onrender.com/getAllTemplates";
 export const BASE_URL = "https://artisan-api-q9uw.onrender.com/";
+export const LOADER_GIF_URL =
+  "https://cdn.dribbble.com/users/935167/screenshots/2896660/media/2d8f0934f7ff1c042c3a8dddc08d4364.gif";
 
-// // For local Development
+// For local Development
 // export const SIGN_IN_URL = "http://localhost:3000/auth/signin";
 // export const SIGN_UP_URL = "http://localhost:3000/auth/signup";
 // export const CREATE_USER = "http://localhost:3000/create-userProfile";
@@ -19,6 +21,7 @@ export const BASE_URL = "https://artisan-api-q9uw.onrender.com/";
 // export const UPLOAD_TEMPLATE = "http://localhost:3000/addNewTemplate";
 // export const GET_ALL_TEMPLATES = "http://localhost:3000/getAllTemplates";
 // export const BASE_URL = "http://localhost:3000/";
+// export const LOADER_GIF_URL = "https://cdn.dribbble.com/users/935167/screenshots/2896660/media/2d8f0934f7ff1c042c3a8dddc08d4364.gif"
 
 export const DISTRICTS = [
   "Ajmer",

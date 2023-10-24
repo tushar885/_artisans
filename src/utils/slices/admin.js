@@ -4,7 +4,7 @@ const adminSlice = createSlice({
   name: "Admin",
   initialState: {
     allUsers: [],
-    allTemplates: [],
+    allTemplates: null,
   },
   reducers: {
     populate_allUsers: (state, action) => {

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import store from "../utils/store";
-import { BASE_URL, TEMPLATE_1, TEMPLATE_2 } from "../utils/constants";
+import {
+  BASE_URL,
+  TEMPLATE_1,
+  TEMPLATE_2,
+  LOADER_GIF_URL,
+} from "../utils/constants";
 // import TEMPLATE_1 from "../../template_1.html";
 import { useRef, useEffect } from "react";
 import axios from "axios";
@@ -76,17 +81,21 @@ const KhojoProfilesFrame = ({ user }) => {
 
   if (!user.theme_id) return;
 
-  if (originalHTML === null) return <div></div>;
+  // if (originalHTML === null) return <div></div>;
   return (
     <div className="flex flex-wrap justify-center py-4 pt-0">
-      <iframe
-        width={"450px"}
-        height={"650px"}
-        ref={iframeRef}
-        className="rounded-lg"
-      >
-        {}
-      </iframe>
+      {originalHTML ? (
+        <iframe
+          width={"450px"}
+          height={"650px"}
+          ref={iframeRef}
+          className="rounded-lg"
+        >
+          {}
+        </iframe>
+      ) : (
+        <img src={LOADER_GIF_URL} alt="loader_gif" className="w-24 h-auto" />
+      )}
     </div>
   );
 };

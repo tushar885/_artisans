@@ -4,8 +4,10 @@ import { useContext } from "react";
 import ThemeSelected from "../utils/ThemeSelected";
 import { Link } from "react-router-dom";
 import store from "../utils/store";
-import { GET_ALL_TEMPLATES } from "../utils/constants";
+import { GET_ALL_TEMPLATES, LOADER_GIF_URL } from "../utils/constants";
 import { populate_allTemplates } from "../utils/slices/admin";
+
+// import loader_gif from "../../assests/LOADER_GIF.gif"
 
 const Home = () => {
   const userStore = useSelector((store) => store.User);
@@ -58,23 +60,31 @@ const Home = () => {
       <div className="w-full max-w-xl flex flex-col gap-6 ">
         <p className="text-xl text-gray-900 font-bold">Create Profile : </p>
         <div className="flex w-full gap-4 flex-col sm:flex-row flex-wrap ">
-          {allTemplates.map((temp) => {
-            console.log(temp);
-            return (
-              <Link to={"/form"} key={temp._id}>
-                <div className="border-2 p-1 border-indigo-600 rounded-lg">
-                  <img
-                    src={temp.previewImageUrl}
-                    alt={temp.theme_id}
-                    className="w-24 h-auto rounded-lg"
-                    onClick={() => {
-                      setTheme(temp.theme_id);
-                    }}
-                  />
-                </div>
-              </Link>
-            );
-          })}
+          {allTemplates ? (
+            allTemplates.map((temp) => {
+              console.log(temp);
+              return (
+                <Link to={"/form"} key={temp._id}>
+                  <div className="border-2 p-1 border-indigo-600 rounded-lg">
+                    <img
+                      src={temp.previewImageUrl}
+                      alt={temp.theme_id}
+                      className="w-24 h-auto rounded-lg"
+                      onClick={() => {
+                        setTheme(temp.theme_id);
+                      }}
+                    />
+                  </div>
+                </Link>
+              );
+            })
+          ) : (
+            <img
+              src={LOADER_GIF_URL}
+              alt="loader_gif"
+              className="w-24 h-auto"
+            />
+          )}
         </div>
 
         <div>
