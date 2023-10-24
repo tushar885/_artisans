@@ -3,3 +3,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide the scrollbar for webkit-based browsers (e.g., Chrome, Safari) */
+body {
+  scrollbar-width: thin; /* Hide the scrollbar track */
+}
+
+body::-webkit-scrollbar {
+  width: 0rem; /* Set the width of the scrollbar track to make it thin */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Hide the thumb of the scrollbar */
+}
