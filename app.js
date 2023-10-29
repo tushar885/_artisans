@@ -11,6 +11,8 @@ import Cart from "./src/components/Cart";
 import Map from "./src/components/Map";
 import KhojoProfileForm from "./src/components/KhojoProfileForm";
 import ShowProfiles from "./src/components/ShowProfiles";
+import KhojoProfilesFrame from "./src/components/KhojoProfilesFrame";
+import PublicProfile from "./src/components/PublicProfile";
 
 const route = createBrowserRouter([
   {
@@ -63,6 +65,10 @@ const route = createBrowserRouter([
         <Signin />
       </Provider>
     ),
+  },
+  {
+    path: "/profiles/:profile_id",
+    element: <PublicProfile />,
   },
 ]);
 

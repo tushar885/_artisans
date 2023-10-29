@@ -16,3 +16,42 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   background-color: transparent; /* Hide the thumb of the scrollbar */
 }
+
+.path-element:hover {
+  opacity: 0.5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.slider {
+  /* padding: 0px 5px; */
+  height: 14px;
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 5px;
+  /* margin-top: 10px; */
+  display: flex;
+  align-items: center;
+}
+
+/* Styles for the slider thumb */
+.slider .thumb {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: #007bff;
+  cursor: grab;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles for the slider active state */
+.slider .thumb.active {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.track.track-1 {
+  height: 3px;
+  background-color: #007bff;
+}

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Formik, ErrorMessage } from "formik";
-import { CREATE_USER, DISTRICTS } from "../utils/constants";
+import { CREATE_USER, DISTRICTS, OCCUPATIONS } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import store from "../utils/store";
 import axios from "axios";
@@ -18,10 +18,15 @@ const KhojoProfileForm = () => {
   const dispatch = useDispatch();
 
   const { theme, setTheme } = useContext(ThemeSelected);
+  console.log(theme);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (theme === null) navigate("/");
+
+    return () => {
+      setTheme(null);
+    };
   }, []);
 
   return (
@@ -36,6 +41,8 @@ const KhojoProfileForm = () => {
         instagram: "",
         twitter: "",
         facebook: "",
+        occupation: OCCUPATIONS[0],
+        age: 0,
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         const reqBody = new FormData();
@@ -49,6 +56,8 @@ const KhojoProfileForm = () => {
         reqBody.append("twitter", values.twitter);
         reqBody.append("facebook", values.facebook);
         reqBody.append("theme_id", theme);
+        reqBody.append("age", values.age);
+        reqBody.append("occupation", values.occupation);
 
         try {
           const response = await axios.post(CREATE_USER, reqBody, {
@@ -244,6 +253,26 @@ const KhojoProfileForm = () => {
                       </div>
                     </div>
 
+                    <div className="sm:col-span-full">
+                      <label
+                        htmlFor="age"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Age
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="number"
+                          name="age"
+                          id="age"
+                          min="0"
+                          max="150"
+                          {...formik.getFieldProps("age")}
+                          className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+
                     <div className="sm:col-span-3">
                       <label
                         htmlFor="district"
@@ -261,6 +290,26 @@ const KhojoProfileForm = () => {
                         >
                           {DISTRICTS.map((district) => (
                             <option>{district}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="occupation"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Occupation
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          id="occupation"
+                          name="occupation"
+                          {...formik.getFieldProps("occupation")}
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        >
+                          {OCCUPATIONS.map((occupation) => (
+                            <option>{occupation}</option>
                           ))}
                         </select>
                       </div>

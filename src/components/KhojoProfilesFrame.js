@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import store from "../utils/store";
-import {
-  BASE_URL,
-  TEMPLATE_1,
-  TEMPLATE_2,
-  LOADER_GIF_URL,
-} from "../utils/constants";
+import { BASE_URL, LOADER_GIF_URL } from "../utils/constants";
 // import TEMPLATE_1 from "../../template_1.html";
 import { useRef, useEffect } from "react";
 import axios from "axios";
 
-const KhojoProfilesFrame = ({ user }) => {
-  const { jwtToken } = useSelector((store) => store.User);
+const KhojoProfilesFrame = ({ user = {} }) => {
   const [originalHTML, setOriginalHTML] = useState(null);
-  console.log(originalHTML);
 
   const {
     name,
@@ -36,13 +29,12 @@ const KhojoProfilesFrame = ({ user }) => {
         "http://res.cloudinary.com",
         ""
       );
-      console.log(`${BASE_URL}cloudinary` + cloudinaryLink);
       const resBody = await axios.get(
         `${BASE_URL}cloudinary` + cloudinaryLink,
         {
-          headers: {
-            authorization: `bearer ${jwtToken}`,
-          },
+          // headers: {
+          //   authorization: `bearer ${jwtToken}`,
+          // },
           mode: "cors",
         }
       );
@@ -52,7 +44,7 @@ const KhojoProfilesFrame = ({ user }) => {
     }
 
     getTemplate();
-  }, [user, jwtToken]);
+  }, [user]);
 
   useEffect(() => {
     // Function to remove double quotes and update iframe content

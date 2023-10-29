@@ -83,8 +83,6 @@ const Admin = () => {
 
       const resData = await resBody.json();
 
-      console.log(resData);
-
       if (resBody.ok) {
         dispatch(populate_allUsers(resData));
       }

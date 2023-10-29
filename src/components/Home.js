@@ -24,8 +24,6 @@ const Home = () => {
     });
 
     const resData = await resBody.json();
-    console.log(resBody);
-    console.log(resData);
     if (resBody.ok) {
       return resData;
     } else {
@@ -45,6 +43,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-16">
+      {/* <Link to={"/form"}>okay</Link> */}
       <div className="max-w-6xl flex flex-col justify-center items-center text-left gap-4 w-fit">
         <div className="text-gray-900 font-bold text-5xl leading-[2.5rem] tracking-normal font-founder w-full">
           Hi there,
@@ -62,7 +61,6 @@ const Home = () => {
         <div className="flex w-full gap-4 flex-col sm:flex-row flex-wrap ">
           {allTemplates ? (
             allTemplates.map((temp) => {
-              console.log(temp);
               return (
                 <Link to={"/form"} key={temp._id}>
                   <div className="border-2 p-1 border-indigo-600 rounded-lg">
