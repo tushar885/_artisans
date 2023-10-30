@@ -21,10 +21,13 @@ const Map = () => {
 
   const dispatch = useDispatch();
 
+  const [updating, setUpdating] = useState(false);
+
   const [occupation, setOccupation] = useState("ALL");
   const [district, setDistrict] = useState("ALL");
 
   async function getProfiles() {
+    setUpdating(true);
     const resBody = await fetch(GET_FILTERED_PROFILES, {
       method: "POST",
       headers: {
@@ -42,13 +45,18 @@ const Map = () => {
 
     if (resBody.ok) {
       dispatch(populateMap({ count: resData.length, profiles: resData }));
+      setUpdating(false);
     }
 
     console.log(resData);
   }
 
   return (
-    <div className="flex flex-col gap-8 items-center">
+    <div
+      className={`flex flex-col gap-8 items-center ${
+        updating ? "opacity-50" : ""
+      }`}
+    >
       <p className="text-gray-900 font-bold text-5xl  font-Josefin text-center w-full sm:text-left py-4">
         MAP UTILITY
       </p>
