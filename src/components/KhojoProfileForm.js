@@ -69,6 +69,7 @@ const KhojoProfileForm = () => {
           setSubmitting(false);
           resetForm();
           setImage(null);
+          console.log(response.data);
 
           if (response.status === 201) {
             dispatch(
