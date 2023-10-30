@@ -146,7 +146,7 @@ const Map = () => {
                 {mapStore.count}
               </p>
             </div>
-            <div className=" border-2 px-3 py-2 rounded-xl">
+            <div className=" border-2 px-3 py-2 rounded-xl max-h-screen">
               <p className="text-indigo-600 font-bold text-2xl font-Josefin text-center sm:text-left py-4">
                 Artisans :
               </p>
